@@ -207,9 +207,13 @@
       "__id__": 2
     },
     "_enabled": true,
-    "hero": null,
+    "hero": {
+      "__uuid__": "91fd36c4-587c-4545-80d2-45e0572b863e"
+    },
     "block": {
       "__uuid__": "14e08031-8d71-4709-ae04-ea28eae142d8"
-    }
+    },
+    "player": null,
+    "routes": []
   }
 ]

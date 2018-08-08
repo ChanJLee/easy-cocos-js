@@ -27,9 +27,6 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-
-        x: 0,
-        y: 0,
         speed: 0,
     },
 

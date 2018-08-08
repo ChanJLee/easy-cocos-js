@@ -36,15 +36,41 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        routes: []
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+        // enable collision manager
+        var manager = cc.director.getCollisionManager();
+        manager.enabled = true;
 
-    start () {
+        var y = -this.node.getPositionY();
+        for (var i = 0; i < 10; ++i) {
+            var sprite = cc.instantiate(this.block);
+            sprite.setPositionX(0);
+            sprite.setPositionY(y);
+            this.node.addChild(sprite);
+            y += sprite.getContentSize().width;
+            this.routes.push(sprite);
+        }
 
+        // register event
+        // release routes
+        // release player
     },
 
-    // update (dt) {},
+    start () {
+        // do nothing
+    },
+
+    update (dt) {
+        // check if player collision
+        for (var i in this.routes) {
+            var sprite = this.routes[i];
+            cc.log(sprite.getComponent('Block'))
+            sprite.setPositionY(sprite.getPositionY() + 2);
+        }
+    },
 });
