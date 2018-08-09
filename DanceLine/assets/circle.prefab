@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "circle",
+    "_name": "Circle",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -101,9 +101,7 @@
     },
     "_enabled": true,
     "host": null,
-    "x": 0,
-    "y": 0,
-    "speed": 0
+    "speed": 2
   },
   {
     "__type__": "cc.CircleCollider",

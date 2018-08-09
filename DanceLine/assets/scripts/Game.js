@@ -27,17 +27,59 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        host: null,
-        speed: 0,
+        hero: {
+            default: null,
+            type: cc.Prefab
+        },
+
+        block: {
+            default: null,
+            type: cc.Prefab
+        },
+        routes: []
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad() {
+        // enable collision manager
+        var manager = cc.director.getCollisionManager();
+        manager.enabled = true;
 
-    start () {
+
+        // register event
+        // release routes
+        // release player
+    },
+
+    start() {
+        // do nothing
+        var y = -this.node.getPositionY();
+        for (var i = 0; i < 10; ++i) {
+            var sprite = cc.instantiate(this.block);
+            sprite.setPositionX(0);
+            sprite.setPositionY(y);
+            this.node.addChild(sprite);
+            y += sprite.getContentSize().width;
+            this.routes.push(sprite);
+        }
 
     },
 
-    // update (dt) {},
+    update(dt) {
+        // check if player collision
+        for (var i in this.routes) {
+            var sprite = this.routes[i];
+            sprite.setPositionY(sprite.getPositionY() + 2);
+        }
+    },
+
+    writeObj(obj) {
+        var description = "";
+        for (var i in obj) {
+            var property = obj[i];
+            description += i + " = " + property + "\n";
+        }
+        return description;
+    },
 });

@@ -27,50 +27,28 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        hero : {
-            default: null,
-            type: cc.Prefab
-        },
-
-        block : {
-            default: null,
-            type: cc.Prefab
-        },
-        routes: []
+        host: null,
+        speed: 0,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        // enable collision manager
-        var manager = cc.director.getCollisionManager();
-        manager.enabled = true;
-
-        var y = -this.node.getPositionY();
-        for (var i = 0; i < 10; ++i) {
-            var sprite = cc.instantiate(this.block);
-            sprite.setPositionX(0);
-            sprite.setPositionY(y);
-            this.node.addChild(sprite);
-            y += sprite.getContentSize().width;
-            this.routes.push(sprite);
-        }
-
-        // register event
-        // release routes
-        // release player
     },
 
     start () {
         // do nothing
     },
 
-    update (dt) {
-        // check if player collision
-        for (var i in this.routes) {
-            var sprite = this.routes[i];
-            cc.log(sprite.getComponent('Block'))
-            sprite.setPositionY(sprite.getPositionY() + 2);
-        }
-    },
+    update (dt) {},
+
+    check(points) {
+        var collider =  getComponent('cc.CircleCollider');
+        var circle = {};
+        circle.position = new Vec2(0, 0);
+        circle.position.x = collider.offset.x;
+        circle.position.y = collider.offset.y;
+        circle.radius = collider.radius;
+        return cc.Intersection.polygonCircle(points, circle);
+    }
 });

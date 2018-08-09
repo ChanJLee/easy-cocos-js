@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "block",
+    "_name": "Block",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -100,9 +100,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "x": 0,
-    "y": 0,
-    "speed": 20
+    "speed": 2
   },
   {
     "__type__": "cc.PolygonCollider",
