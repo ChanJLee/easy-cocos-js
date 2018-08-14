@@ -56,7 +56,8 @@ cc.Class({
     start() {
         // do nothing
         var y = -this.node.getPositionY();
-        for (var i = 0; i < 5; ++i) {
+        var num = 5;
+        for (var i = 0; i < num; ++i) {
             var sprite = cc.instantiate(this.block);
             sprite.setPositionX(0);
             sprite.setPositionY(y);
@@ -70,7 +71,7 @@ cc.Class({
         this.player = hero;
         hero.setPositionY(50);
         hero.getPositionX(50);
-        hero.setLocalZOrder(1);
+        hero.setLocalZOrder(num + 1);
         this.node.addChild(hero);
     },
 
