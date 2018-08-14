@@ -29,6 +29,7 @@ cc.Class({
         // },
         host: null,
         speed: 0,
+        lastNode: null,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -43,12 +44,13 @@ cc.Class({
     update (dt) {},
 
     check(points) {
-        var collider =  getComponent('cc.CircleCollider');
+        var collider = this.getComponent('cc.CircleCollider');
         var circle = {};
-        circle.position = new Vec2(0, 0);
-        circle.position.x = collider.offset.x;
-        circle.position.y = collider.offset.y;
+        circle.position = {};
+        circle.position.x = collider.offset.x + this.node.getPositionX();
+        circle.position.y = collider.offset.y + this.node.getPositionY();
         circle.radius = collider.radius;
+        cc.log(points + " " + circle.position.x + " " + circle.position.y + " " + circle.radius);
         return cc.Intersection.polygonCircle(points, circle);
     }
 });

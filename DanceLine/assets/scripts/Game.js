@@ -36,7 +36,8 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
-        routes: []
+        routes: [],
+        player: null,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -55,31 +56,52 @@ cc.Class({
     start() {
         // do nothing
         var y = -this.node.getPositionY();
-        for (var i = 0; i < 10; ++i) {
+        for (var i = 0; i < 5; ++i) {
             var sprite = cc.instantiate(this.block);
             sprite.setPositionX(0);
             sprite.setPositionY(y);
+            sprite.setLocalZOrder(0);
             this.node.addChild(sprite);
-            y += sprite.getContentSize().width;
+            y += (sprite.getContentSize().height - sprite.getContentSize().width);
             this.routes.push(sprite);
         }
 
+        var hero = cc.instantiate(this.hero);
+        this.player = hero;
+        hero.setPositionY(50);
+        hero.getPositionX(50);
+        hero.setLocalZOrder(1);
+        this.node.addChild(hero);
     },
 
     update(dt) {
-        // check if player collision
+        if (!this.routes) {
+            return;
+        }
+    
+        var max = 1.40129846432481707e-45;
         for (var i in this.routes) {
             var sprite = this.routes[i];
-            sprite.setPositionY(sprite.getPositionY() + 2);
+            sprite.setPositionY(sprite.getPositionY() - sprite.getComponent("Block").speed);
+            if (max < sprite.getPositionY()) {
+                max = sprite.getPositionY();
+            }
         }
-    },
 
-    writeObj(obj) {
-        var description = "";
-        for (var i in obj) {
-            var property = obj[i];
-            description += i + " = " + property + "\n";
+        for (var i in this.routes) {
+            var sprite = this.routes[i];
+            if (sprite.getPositionY() <= -this.node.getPositionY() - sprite.getContentSize().height + sprite.getContentSize().width) {
+                sprite.setPositionY(max + sprite.getContentSize().height - sprite.getContentSize().width);
+                max = sprite.getPositionY();
+            }
         }
-        return description;
+
+        var stack = this.routes.sort(function(lhs, rhs) {
+            return lhs.getPositionY() - rhs.getPositionY();
+        })
+
+        for (var i = 0; i < stack.length; ++i) {
+            stack[i].setLocalZOrder(i);
+        }
     },
 });
