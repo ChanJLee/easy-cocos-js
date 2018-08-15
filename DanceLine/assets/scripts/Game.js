@@ -80,6 +80,7 @@ cc.Class({
             return;
         }
     
+        // update position
         var max = 1.40129846432481707e-45;
         for (var i in this.routes) {
             var sprite = this.routes[i];
@@ -89,6 +90,7 @@ cc.Class({
             }
         }
 
+        // recycler sprite
         for (var i in this.routes) {
             var sprite = this.routes[i];
             if (sprite.getPositionY() <= -this.node.getPositionY() - sprite.getContentSize().height + sprite.getContentSize().width) {
