@@ -43,27 +43,20 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-        // enable collision manager
-        var manager = cc.director.getCollisionManager();
-        manager.enabled = true;
-
-
-        // register event
-        // release routes
-        // release player
     },
 
     start() {
-        // do nothing
-        var y = -this.node.getPositionY();
-        var num = 5;
+        var sprite = cc.instantiate(this.block);
+        sprite.setPositionX(0);
+        sprite.setPositionY(-this.node.getPositionY());
+        this.node.addChild(sprite);
+        this.routes.push(sprite);
+
+        var num = 4;
         for (var i = 0; i < num; ++i) {
-            var sprite = cc.instantiate(this.block);
-            sprite.setPositionX(0);
-            sprite.setPositionY(y);
-            sprite.setLocalZOrder(0);
+            sprite = cc.instantiate(this.block);
+            this.configureBlock(this.routes[this.routes.length - 1], sprite, Math.random() > 0.495)
             this.node.addChild(sprite);
-            y += (sprite.getContentSize().height - sprite.getContentSize().width);
             this.routes.push(sprite);
         }
 
@@ -71,40 +64,52 @@ cc.Class({
         this.player = hero;
         hero.setPositionY(50);
         hero.getPositionX(50);
-        hero.setLocalZOrder(num + 1);
         this.node.addChild(hero);
+
+        this.configureZOrder();
     },
 
     update(dt) {
-        if (!this.routes) {
-            return;
-        }
+        // if (!this.routes) {
+        //     return;
+        // }
     
-        // update position
-        var max = 1.40129846432481707e-45;
-        for (var i in this.routes) {
-            var sprite = this.routes[i];
-            sprite.setPositionY(sprite.getPositionY() - sprite.getComponent("Block").speed);
-            if (max < sprite.getPositionY()) {
-                max = sprite.getPositionY();
-            }
-        }
+        // // update position
+        // var max = 1.40129846432481707e-45;
+        // for (var i in this.routes) {
+        //     var sprite = this.routes[i];
+        //     sprite.setPositionY(sprite.getPositionY() - sprite.getComponent("Block").speed);
+        //     if (max < sprite.getPositionY()) {
+        //         max = sprite.getPositionY();
+        //     }
+        // }
 
-        // recycler sprite
-        for (var i in this.routes) {
-            var sprite = this.routes[i];
-            if (sprite.getPositionY() <= -this.node.getPositionY() - sprite.getContentSize().height + sprite.getContentSize().width) {
-                sprite.setPositionY(max + sprite.getContentSize().height - sprite.getContentSize().width);
-                max = sprite.getPositionY();
-            }
-        }
+        // // recycler sprite
+        // for (var i in this.routes) {
+        //     var sprite = this.routes[i];
+        //     if (sprite.getPositionY() <= -this.node.getPositionY() - sprite.getContentSize().height + sprite.getContentSize().width) {
+        //         sprite.setPositionY(max + sprite.getContentSize().height - sprite.getContentSize().width);
+        //         max = sprite.getPositionY();
+        //     }
+        // }
 
-        var stack = this.routes.sort(function(lhs, rhs) {
-            return lhs.getPositionY() - rhs.getPositionY();
-        })
+        // var stack = this.routes.sort(function(lhs, rhs) {
+        //     return lhs.getPositionY() - rhs.getPositionY();
+        // })
 
-        for (var i = 0; i < stack.length; ++i) {
-            stack[i].setLocalZOrder(i);
-        }
+        // for (var i = 0; i < stack.length; ++i) {
+        //     stack[i].setLocalZOrder(i);
+        // }
     },
+    configureBlock(base, target, right) {
+        var offset = base.getContentSize().width / 2;
+        target.setPositionX(base.getPositionX() + (right ? offset : -offset) + 0.2);
+        target.setPositionY(base.getPositionY() + offset / 2 + 0.2);
+    },
+    configureZOrder() {
+        for (var i = 0; i < this.routes.length; ++i) {
+            this.routes[i].setLocalZOrder(this.routes.length - i);
+        }
+        this.player.setLocalZOrder(this.routes.length);
+    }
 });
