@@ -52,7 +52,7 @@ cc.Class({
         this.node.addChild(sprite);
         this.routes.push(sprite);
 
-        var num = 4;
+        var num = 10;
         for (var i = 0; i < num; ++i) {
             sprite = cc.instantiate(this.block);
             this.configureBlock(this.routes[this.routes.length - 1], sprite, Math.random() > 0.495)
@@ -70,36 +70,35 @@ cc.Class({
     },
 
     update(dt) {
-        // if (!this.routes) {
-        //     return;
-        // }
+        if (!this.routes) {
+            return;
+        }
     
-        // // update position
-        // var max = 1.40129846432481707e-45;
-        // for (var i in this.routes) {
-        //     var sprite = this.routes[i];
-        //     sprite.setPositionY(sprite.getPositionY() - sprite.getComponent("Block").speed);
-        //     if (max < sprite.getPositionY()) {
-        //         max = sprite.getPositionY();
-        //     }
-        // }
+        // update position
+        var max = this.routes[0];
+        for (var i in this.routes) {
+            var sprite = this.routes[i];
+            sprite.setPositionY(sprite.getPositionY() - sprite.getComponent("Block").speed);
+            if (max.getPositionY() < sprite.getPositionY()) {
+                max = sprite;
+            }
+        }
 
-        // // recycler sprite
-        // for (var i in this.routes) {
-        //     var sprite = this.routes[i];
-        //     if (sprite.getPositionY() <= -this.node.getPositionY() - sprite.getContentSize().height + sprite.getContentSize().width) {
-        //         sprite.setPositionY(max + sprite.getContentSize().height - sprite.getContentSize().width);
-        //         max = sprite.getPositionY();
-        //     }
-        // }
+        // recycler sprite
+        for (var i in this.routes) {
+            var sprite = this.routes[i];
+            if (sprite.getPositionY() <= -this.node.getPositionY() - sprite.getContentSize().height + sprite.getContentSize().width) {
+                this.configureBlock(max, sprite, Math.random() > 0.495);
+                max = sprite;
+            }
+        }
 
-        // var stack = this.routes.sort(function(lhs, rhs) {
-        //     return lhs.getPositionY() - rhs.getPositionY();
-        // })
+        var stack = this.routes.sort(function(lhs, rhs) {
+            return lhs.getPositionY() - rhs.getPositionY();
+        })
 
-        // for (var i = 0; i < stack.length; ++i) {
-        //     stack[i].setLocalZOrder(i);
-        // }
+        this.routes = stack;
+        this.configureZOrder();
     },
     configureBlock(base, target, right) {
         var offset = base.getContentSize().width / 2;

@@ -21,7 +21,7 @@
     "_active": true,
     "_components": [],
     "_prefab": null,
-    "_id": "05O9S/lbJIAbo23PMquc3B",
+    "_id": "2bf850cb-5ad9-4c52-a6d3-3572f61eb5f6",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -44,7 +44,8 @@
     "_localZOrder": 0,
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
-    "groupIndex": 0
+    "groupIndex": 0,
+    "autoReleaseAssets": false
   },
   {
     "__type__": "cc.Node",
@@ -213,7 +214,7 @@
     "block": {
       "__uuid__": "14e08031-8d71-4709-ae04-ea28eae142d8"
     },
-    "player": null,
-    "routes": []
+    "routes": [],
+    "player": null
   }
 ]
