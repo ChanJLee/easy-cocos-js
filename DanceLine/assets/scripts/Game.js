@@ -106,9 +106,10 @@ cc.Class({
         target.setPositionY(base.getPositionY() + offset / 2 + 0.2);
     },
     configureZOrder() {
+        var playerZOrder = this.routes.length;
         for (var i = 0; i < this.routes.length; ++i) {
-            this.routes[i].setLocalZOrder(this.routes.length - i);
+            this.routes[i].setLocalZOrder(playerZOrder - i);
         }
-        this.player.setLocalZOrder(this.routes.length);
+        this.player.setLocalZOrder(playerZOrder);
     }
 });
