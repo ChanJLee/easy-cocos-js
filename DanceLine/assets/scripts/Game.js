@@ -111,5 +111,6 @@ cc.Class({
             this.routes[i].setLocalZOrder(playerZOrder - i);
         }
         this.player.setLocalZOrder(playerZOrder);
+        // check in 
     }
 });
